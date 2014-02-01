@@ -27,20 +27,25 @@ DEVICE_PACKAGE_OVERLAYS += device/samsung/mint/overlay
 
 LOCAL_PATH := device/samsung/mint
 
+# Softlink sh
+$(shell mkdir -p $(LOCAL_PATH)/../../../out/target/product/mint/recovery/root/system/bin)
+$(shell ln -sf -t $(LOCAL_PATH)/../../../out/target/product/mint/recovery/root/system/bin ../../sbin/sh)
+
 # Init Files
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/init.sp8810.rc:root/init.sp8810.rc \
     $(LOCAL_PATH)/rootdir/init.sp8810.usb.rc:root/init.sp8810.usb.rc \
     $(LOCAL_PATH)/rootdir/fstab.sp8810:root/fstab.sp8810 \
     $(LOCAL_PATH)/rootdir/lpm.rc:root/lpm.rc \
-    $(LOCAL_PATH)/rootdir/ueventd.sp8810.rc:root/ueventd.sp8810.rc
+    $(LOCAL_PATH)/rootdir/ueventd.sp8810.rc:root/ueventd.sp8810.rc \
+    $(LOCAL_PATH)/rootdir/modem_control:root/modem_control \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
 
 # Recovery
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/init.recovery.sp8810.rc:root/init.recovery.sp8810.rc
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/rootdir/init.recovery.sp8810.rc:root/init.recovery.sp8810.rc
 
 # Idc
 PRODUCT_COPY_FILES += \
@@ -55,7 +60,8 @@ PRODUCT_COPY_FILES += \
 # Media
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml \
-     $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml
+     $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml \
+     $(LOCAL_PATH)/media/240.zip:system/media/bootanimation.zip
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -66,10 +72,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=120 \
     ro.lcd_min_brightness=20
 
-# Wifi
+# These are the hardware-specific settings that are stored in system properties.
+# Note that the only such settings should be the ones that are too low-level to
+# be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=150
+    wifi.supplicant_scan_interval=150 \
+    ro.telephony.ril_class=SamsungBCMRIL
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -79,7 +88,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
      $(LOCAL_PATH)/configs/default_gain.conf:system/etc/default_gain.conf \
-     $(LOCAL_PATH)/configs/DiamondVoice.txt:system/etc/DiamondVoice.txt \
      $(LOCAL_PATH)/configs/tiny_hw.xml:system/etc/tiny_hw.xml \
      $(LOCAL_PATH)/configs/tinyucm.conf:system/etc/tinyucm.conf
 
@@ -114,12 +122,25 @@ PRODUCT_COPY_FILES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-    make_ext4fs \
     setup_fs
 
 # Misc packages
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
+
+# enable Google-specific location features,
+# like NetworkLocationProvider and LocationCollector
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.google.locationfeatures=1 \
+    ro.com.google.networklocation=1
+
+# Extended JNI checks
+# The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
+# before they have a chance to cause problems.
+# Default=true for development builds, set by android buildsystem.
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    dalvik.vm.checkjni=false
 
 ## LDPI assets
 PRODUCT_AAPT_CONFIG := normal ldpi mdpi nodpi

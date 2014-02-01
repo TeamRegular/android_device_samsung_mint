@@ -38,7 +38,7 @@ BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 TARGET_KERNEL_SOURCE := kernel/samsung/mint
 TARGET_KERNEL_CONFIG := cyanogenmod_mint_defconfig
-USES_UNCOMPRESSED_KERNEL := true
+BOARD_USES_UNCOMPRESSED_BOOT := true
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 10485760
@@ -62,6 +62,7 @@ BOARD_LDPI_RECOVERY := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := "<font_7x16.h>"
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/samsung/mint/recovery/recovery_keys.c
+TARGET_RECOVERY_INITRC := device/samsung/mint/recovery/recovery.rc
 BOARD_CUSTOM_GRAPHICS := ../../../device/samsung/mint/recovery/graphics.c
 BOARD_HAS_NO_MISC_PARTITION := true
 TARGET_RECOVERY_FSTAB := device/samsung/mint/recovery.fstab
@@ -75,10 +76,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/dwc_otg.0/gadget/lun0/
 USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/samsung/mint/egl/egl.cfg
 BOARD_EGL_NEEDS_LEGACY_FB := true
-
-# Screen
-TARGET_SCREEN_WIDTH := 240
-TARGET_SCREEN_HEIGHT := 320
 
 # Camera
 
@@ -124,3 +121,17 @@ COMMON_GLOBAL_CFLAGS += -DMR0_AUDIO_BLOB
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+
+# TWRP Details
+DEVICE_RESOLUTION := 240x240
+TARGET_RECOVERY_PIXEL_FORMAT := "RGB_565"
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+RECOVERY_SDCARD_ON_DATA := true
+TW_INTERNAL_STORAGE_PATH := "/data/media/0"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_NO_REBOOT_BOOTLOADER := true
+TW_HAS_DOWNLOAD_MODE := true
+BOARD_HAS_NO_REAL_SDCARD := true
