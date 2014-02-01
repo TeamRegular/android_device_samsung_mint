@@ -1,0 +1,105 @@
+<!-- TinyHAL configuration file for GOD -->
+<tinyalsa-audio device="SC8810 audio">
+
+   <!-- We are able to have most of our routing static so do that -->
+   <path>
+
+     <!-- DAC->Headphone -->
+     <ctl name="HeadPhone Playback Volume" val="12" />
+
+     <!-- DAC->Speaker -->
+     <ctl name="Master Playback Volume" val="12" />
+     <ctl name="Inter PA Playback Volume" val="12" />
+
+     <!-- DAC->Earpiece -->
+     <ctl name="Ear Boost Volume" val="1" />
+
+     <!-- ADC ->(main mic)  -->
+     <ctl name="Capture Volume" val="12" />
+     <ctl name="Mic Boost Volume" val="1" />
+
+     <ctl name="Line Playback Volume" val="12" />
+     <ctl name="LineinRec Capture Volume" val="0" />
+   </path>
+
+<device name="speaker">
+   <path name="on">
+     <ctl name="Speaker Function" val="1" />
+   </path>
+   <path name="off">
+     <ctl name="Speaker Function" val="0" />
+   </path>
+</device>
+
+<device name="headphone">
+   <path name="on">
+     <ctl name="HeadPhone Function" val="1" />
+   </path>
+   <path name="off">
+     <ctl name="HeadPhone Function" val="0" />
+   </path>
+</device>
+
+<device name="earpiece">
+   <path name="on">
+     <ctl name="Earpiece Function" val="1" />
+   </path>
+   <path name="off">
+     <ctl name="Earpiece Function" val="0" />
+   </path>
+</device>
+
+<device name="builtin-mic">
+  <path name="on">
+     <ctl name="Mic Function" val="1" />
+  </path>
+  <path name="off">
+     <ctl name="Mic Function" val="0" />
+  </path>
+</device>
+
+<device name="headset-in">
+  <path name="on">
+     <ctl name="HP Mic Function" val="1" />
+  </path>
+  <path name="off">
+     <ctl name="HP Mic Function" val="0" />
+  </path>
+</device>
+
+<device name="line">
+  <path name="on">
+     <ctl name="Line Function" val="1" />
+  </path>
+  <path name="off">
+     <ctl name="Line Function" val="0" />
+  </path>
+</device>
+
+<device name="linein-capture">
+  <path name="on">
+     <ctl name="Linein Rec Function" val="1" />
+  </path>
+  <path name="off">
+     <ctl name="Linein Rec Function" val="0" />
+  </path>
+</device>
+
+<!-- MUST NOT modify private field directly -->
+<private name="vb control">
+  <func name="VBC Switch" val="arm" />
+</private>
+
+<private name="eq switch">
+  <func name="VBC EQ Switch" val="0" />
+</private>
+
+<private name="eq update">
+  <func name="VBC EQ Update" val="0" />
+</private>
+
+<private name="eq profile">
+  <func name="VBC EQ Profile Select" val="0" />
+</private>
+
+</tinyalsa-audio>

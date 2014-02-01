@@ -1,46 +1,28 @@
-#bin/btld
-bin/bcm4330.hcd
-#bin/LE_dut
-#bin/bcm_dut
-#bin/nvm_daemon
-#bin/ss_daemon
-#bin/sprd_monitor
-#bin/modemd
-#bin/engpcclient
-#bin/engservice
-#bin/engmodemclient
-#bin/engsetmacaddr
-#bin/phoneserver
-#bin/calibration_init
+# Bin
+bin/macloader
+bin/at_distributor
 
+# RIL
 bin/rild_sp
+lib/libril.so
+lib/libsecril-client.so
 lib/libreference-ril.so
+lib/libomission_avoidance.so
+lib/libfactoryutil.so
 
-#bin/p2p_supplicant
-#bin/dhcpcd
-
-#bin/mfgloader
-#bin/wlandutservice
-#bin/macloader
-
-#bin/ext_symlink.sh
-#bin/ext_data.sh
-#bin/ext_kill.sh
-
-#bin/bintvoutservice
-#bin/at_distributor
-
-#bin/ddexe
-#bin/kiesexe
-#bin/smdexe
-#bin/dttexe
-#bin/connfwexe
-#bin/npsmobex
-
+# Voice
+bin/phoneserver
+bin/phoneserver_2sim
 etc/DiamondVoice.txt
-#etc/DiamondVoice_Filter.txt
 lib/modules/VoiceSolution.ko
 
+# Bluetooth
+bin/bcm4330.hcd
+
+# Calibration
+bin/calibration_init
+
+# WIFI
 etc/wifi/bcmdhd_apsta.bin
 etc/wifi/bcmdhd_mfg.bin
 etc/wifi/bcmdhd_p2p.bin
@@ -48,19 +30,52 @@ etc/wifi/bcmdhd_sta.bin
 etc/wifi/nvram_mfg.txt
 etc/wifi/nvram_net.txt
 etc/wifi/wpa_supplicant.conf
+vendor/firmware/fw_bcmdhd.bin
+vendor/firmware/fw_bcmdhd_apsta.bin
+vendor/firmware/fw_bcmdhd_p2p.bin
 
-usr/keylayout/AVRCP.kl
-usr/keylayout/Generic.kl
-usr/keylayout/qwerty.kl
-usr/keylayout/sprd-keypad.kl
-usr/keylayout/Vendor_045e_Product_028e.kl
-usr/keylayout/Vendor_046d_Product_c216.kl
-usr/keylayout/Vendor_046d_Product_c294.kl
-usr/keylayout/Vendor_046d_Product_c299.kl
-usr/keylayout/Vendor_046d_Product_c532.kl
-usr/keylayout/Vendor_04e8_Product_7021.kl
-usr/keylayout/Vendor_054c_Product_0268.kl
-usr/keylayout/Vendor_05ac_Product_0239.kl
-usr/keylayout/Vendor_05ac_Product_0255.kl
-usr/keylayout/Vendor_22b8_Product_093d.kl
+# Lights/Sensors
+lib/hw/lights.sc8810.so
+lib/hw/sensors.sc8810.so
 
+# Display
+lib/hw/gralloc.sc8810.so
+lib/hw/hwcomposer.sc8810.so
+
+# Mali-400
+lib/egl/libEGL_mali.so
+lib/egl/libGLESv2_mali.so
+lib/egl/libGLESv1_CM_mali.so
+lib/libMali.so
+lib/libUMP.so
+
+# Audio
+etc/Volume.db
+lib/hw/audio.primary.sc8810.so
+lib/hw/audio_policy.sc8810.so
+lib/libaudiopolicy_sec.so
+lib/libcontrolcsc.so
+lib/libengclient.so
+lib/liblvvewrapper.so
+lib/libsamsungSoundbooster.so
+lib/libsamsungRecord.so
+lib/lib_SamsungRec_V02002.so
+lib/lib_Samsung_Resampler.so
+lib/lib_Samsung_SB_AM_for_ICS_v03008.so
+lib/libtinyalsa.so
+lib/libvbeffect.so
+lib/libvbpga.so
+lib/libvolumemanager.so
+lib/libxlist.so
+
+# OMX
+lib/libstagefrighthw.so
+
+# Camera
+lib/hw/camera.sc8810.so
+lib/libsecnativefeature.so
+
+# DRM
+lib/libwvdrm_L3.so
+lib/libwvm.so
+lib/libWVStreamControlAPI_L3.so

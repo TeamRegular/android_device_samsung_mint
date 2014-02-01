@@ -4,7 +4,7 @@
 # <src>                        <mnt_point>     <type>    <mnt_flags and options>               <fs_mgr_flags>
 
 /dev/block/mmcblk0p21          /system          ext4    ro                                     wait
-/dev/block/mmcblk0p25	       /data            ext4    noatime,nosuid,nodev,nomblk_io_submit  wait,check,encryptable=footer
-/dev/block/mmcblk0p20	       /cache           ext4    noatime,nosuid,nodev,nomblk_io_submit  wait,check
+/dev/block/mmcblk0p25	      /data            ext4    noatime,nosuid,nodev,nomblk_io_submit  wait,check,encryptable=footer
+/dev/block/mmcblk0p20	      /cache           ext4    noatime,nosuid,nodev,nomblk_io_submit  wait,check
 /dev/block/mmcblk0p19          /efs             ext4    noatime,nosuid,nodev,journal_async_commit,errors=panic    wait,check
 
