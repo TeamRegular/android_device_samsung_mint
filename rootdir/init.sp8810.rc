@@ -354,8 +354,6 @@ service ril-daemon2 /system/bin/rild_sp  -l /system/lib/libreference-ril.so -- -
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r
 
-#on property:persist.msms.phone_count=2
-#    start ril-daemon2
 # create virtual SD card at /storage/sdcard0, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
@@ -363,13 +361,6 @@ service sdcard /system/bin/sdcard /data/media 1023 1023
     class late_start
 
 # TODO: btld is only used for FM
-
-#	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
-service p2p_supplicant /system/bin/p2p_supplicant \
-	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
-	class main
-	disabled
-	oneshot
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -Dnl80211 -iwlan0 -e/data/misc/wifi/entropy.bin -c/data/misc/wifi/wpa_supplicant.conf
@@ -382,18 +373,23 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
-    class main
-    disabled
-    oneshot
+service p2p_supplicant /system/bin/p2p_supplicant \
+	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+	class main
+	disabled
+	oneshot
 
-# Bluetooth
-service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABDKL
     class main
     disabled
     oneshot
 
 service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
@@ -409,14 +405,8 @@ service iprenew_p2p /system/bin/dhcpcd -n
     oneshot
 
 service macloader /system/bin/macloader
-	class main
-	oneshot
-
-on property:init.svc.macloader=stopped
-    chown system root /data/.cid.info
-    chmod 0664 /data/.cid.info
-    chown system root /data/.rev
-    chmod 0660 /data/.rev
+    class main
+    oneshot
 
 service slog /system/bin/slog
     class main
@@ -430,9 +420,9 @@ service pty_symlink /system/bin/ext_symlink.sh -p
     oneshot
 
 service smd_symlink /system/bin/ext_symlink.sh -u
-	user root
-	disabled
-	oneshot
+    user root
+    disabled
+    oneshot
 
 # data on
 service data_on /system/bin/ext_data.sh  -u

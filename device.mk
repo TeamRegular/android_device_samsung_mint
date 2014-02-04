@@ -38,7 +38,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/fstab.sp8810:root/fstab.sp8810 \
     $(LOCAL_PATH)/rootdir/lpm.rc:root/lpm.rc \
     $(LOCAL_PATH)/rootdir/ueventd.sp8810.rc:root/ueventd.sp8810.rc \
-    $(LOCAL_PATH)/rootdir/modem_control:root/modem_control \
+    $(LOCAL_PATH)/rootdir/bin/charge:root/bin/charge \
+    $(LOCAL_PATH)/rootdir/bin/modem_control:root/bin/modem_control \
+    $(LOCAL_PATH)/rootdir/bin/poweroff_alarm:root/bin/poweroff_alarm \
+    $(LOCAL_PATH)/rootdir/bin/vcharged:root/bin/vcharged \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/vold.fstab:system/etc/vold.fstab \
@@ -75,14 +78,22 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
-    audio.usb.default
+    audio.usb.default \
+    audio.primary.sc8810 \
+    tinymix
 
 PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
-     $(LOCAL_PATH)/configs/default_gain.conf:system/etc/default_gain.conf \
-     $(LOCAL_PATH)/configs/tiny_hw.xml:system/etc/tiny_hw.xml \
-     $(LOCAL_PATH)/configs/tinyucm.conf:system/etc/tinyucm.conf
+     $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
+     $(LOCAL_PATH)/audio/devicevolume.xml:system/etc/devicevolume.xml \
+     $(LOCAL_PATH)/audio/formatvolume.xml:system/etc/formatvolume.xml
 
+# Hw params
+PRODUCT_COPY_FILES += \
+     $(LOCAL_PATH)/hw_params/audio_para:system/etc/audio_para \
+     $(LOCAL_PATH)/hw_params/codec_pga.xml:system/etc/codec_pga.xml\
+     $(LOCAL_PATH)/hw_params/tiny_hw.xml:system/etc/tiny_hw.xml
+
+# Device props
 PRODUCT_PROPERTY_OVERRIDES := \
 	keyguard.no_require_sim=true \
 	ro.com.android.dataroaming=false \
@@ -90,8 +101,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 	persist.sys.sprd.modemreset=1
 
 # Sensors
-#PRODUCT_PACKAGES += \
-#    lights.sc8810
+PRODUCT_PACKAGES += \
+    lights.sc8810
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
