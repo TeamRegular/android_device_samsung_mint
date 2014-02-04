@@ -79,13 +79,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio.usb.default \
-    audio.primary.sc8810 \
     tinymix
 
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
      $(LOCAL_PATH)/audio/devicevolume.xml:system/etc/devicevolume.xml \
-     $(LOCAL_PATH)/audio/formatvolume.xml:system/etc/formatvolume.xml
+     $(LOCAL_PATH)/audio/formatvolume.xml:system/etc/formatvolume.xml \
+     $(LOCAL_PATH)/configs/default_gain.conf:system/etc/default_gain.conf \
+     $(LOCAL_PATH)/configs/tinyucm.conf:system/etc/tinyucm.conf
 
 # Hw params
 PRODUCT_COPY_FILES += \

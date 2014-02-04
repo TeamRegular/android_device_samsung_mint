@@ -64,12 +64,22 @@ lib/libMali.so
 lib/libUMP.so
 
 # Audio
-#lib/hw/audio.primary.sc8810.so
-#lib/hw/audio_policy.sc8810.so
-#lib/libLifevibes_lvvefs.so
-#lib/liblvvewrapper.so
-#lib/libvolumemanager.so
-#lib/libxlist.so
+etc/Volume.db
+lib/hw/audio.primary.sc8810.so
+lib/hw/audio_policy.sc8810.so
+lib/libaudiopolicy_sec.so
+lib/libcontrolcsc.so
+lib/libLifevibes_lvvefs.so
+lib/liblvvewrapper.so
+lib/libsamsungSoundbooster.so
+lib/libsamsungRecord.so
+lib/lib_SamsungRec_V02002.so
+lib/lib_Samsung_Resampler.so
+lib/lib_Samsung_SB_AM_for_ICS_v03008.so
+lib/libvbeffect.so
+lib/libvbpga.so
+lib/libvolumemanager.so
+lib/libxlist.so
 
 # OMX
 etc/pvplayer.cfg
