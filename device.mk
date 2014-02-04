@@ -53,24 +53,16 @@ PRODUCT_COPY_FILES += \
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/keylayout/sprd-keypad.kl:system/usr/keylayout/sprd-keypad.kl \
-     $(LOCAL_PATH)/keylayout/Vendor_04e8_Product_7021.kl:system/usr/keylayout/Vendor_04e8_Product_7021.kl \
-     $(LOCAL_PATH)/keylayout/Vendor_05ac_Product_0255.kl:system/usr/keylayout/Vendor_05ac_Product_0255.kl
+     $(LOCAL_PATH)/keylayout/sprd-keypad.kl:system/usr/keylayout/sprd-keypad.kl
 
 # Media
 PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/media/media_codecs.xml:system/etc/media_codecs.xml \
-     $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml \
-     $(LOCAL_PATH)/media/240.zip:system/media/bootanimation.zip
+     $(LOCAL_PATH)/media/media_profiles.xml:system/etc/media_profiles.xml
 
 # Graphics
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=131072 \
-
-# Screen
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=120 \
-    ro.lcd_min_brightness=20
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
@@ -91,15 +83,19 @@ PRODUCT_COPY_FILES += \
      $(LOCAL_PATH)/configs/tiny_hw.xml:system/etc/tiny_hw.xml \
      $(LOCAL_PATH)/configs/tinyucm.conf:system/etc/tinyucm.conf
 
+PRODUCT_PROPERTY_OVERRIDES := \
+	keyguard.no_require_sim=true \
+	ro.com.android.dataroaming=false \
+	persist.msms.phone_count=1 \
+	persist.sys.sprd.modemreset=1
+
 # Sensors
 #PRODUCT_PACKAGES += \
 #    lights.sc8810
 
-# USB
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb \
-    persist.service.adb.enable=1 \
-    persist.sys.storage_preload=1
+# Set default USB interface
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+	persist.sys.usb.config=mtp
 
 # Charger
 PRODUCT_PACKAGES += \

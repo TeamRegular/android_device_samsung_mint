@@ -1,6 +1,21 @@
 # Bin
-bin/macloader
 bin/at_distributor
+bin/bluetoothd
+bin/calibration_init
+bin/cpu
+bin/engmodemclient
+bin/engpcclient
+bin/engservice
+bin/engsetmacaddr
+bin/immvibed
+bin/macloader
+bin/modemd
+bin/nvm_daemon
+bin/slog
+bin/slogctl
+bin/sprd_monitor
+bin/tar
+bin/tinymix
 
 # RIL
 bin/rild_sp
@@ -35,6 +50,7 @@ vendor/firmware/fw_bcmdhd_apsta.bin
 vendor/firmware/fw_bcmdhd_p2p.bin
 
 # Lights/Sensors
+bin/ss_daemon
 lib/hw/lights.sc8810.so
 lib/hw/sensors.sc8810.so
 
@@ -50,12 +66,14 @@ lib/libMali.so
 lib/libUMP.so
 
 # Audio
+etc/audio_para
+etc/formatvolume.xml
 etc/Volume.db
 lib/hw/audio.primary.sc8810.so
 lib/hw/audio_policy.sc8810.so
 lib/libaudiopolicy_sec.so
 lib/libcontrolcsc.so
-lib/libengclient.so
+lib/libLifevibes_lvvefs.so
 lib/liblvvewrapper.so
 lib/libsamsungSoundbooster.so
 lib/libsamsungRecord.so
@@ -69,7 +87,27 @@ lib/libvolumemanager.so
 lib/libxlist.so
 
 # OMX
+etc/pvplayer.cfg
+lib/libomx_avcdec_sharedlibrary.so
+lib/libomx_m4vdec_sharedlibrary.so
+lib/libomx_m4venc_sharedlibrary.so
+lib/libomx_sharedlibrary.so
+lib/libopencore_common.so
 lib/libstagefrighthw.so
+lib/libstagefright_soft_h264dec_sprd.so
+lib/libstagefright_soft_mpeg4dec_sprd.so
+
+# System files
+bin/ext_data.sh
+bin/ext_kill.sh
+bin/ext_symlink.sh
+etc/codec_pga.xml
+etc/slog.conf.user
+etc/slog.conf 
+lib/libatparser.so
+lib/libeng_wifi_ptest.so
+lib/libengclient.so
+lib/libnvaccessor.so
 
 # Camera
 lib/hw/camera.sc8810.so

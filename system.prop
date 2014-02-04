@@ -1,6 +1,11 @@
-
 #
 # system.prop for mint
 #
 
+# LCD density
+ro.sf.lcd_density=120
 
+# Miminum brightness
+ro.lcd_min_brightness=20
+
+ro.product.hardware=SS

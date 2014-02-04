@@ -24,12 +24,15 @@ on init
     symlink /storage/sdcard1 /mnt/extSdCard
     symlink /storage/sdcard1 /external_sd
    
+    mkdir /efs 0771 radio system
+    symlink /efs /factory
     symlink /dev/block/mmcblk0p11 /dev/block/param  
 
 on fs
 
     mkdir /productinfo 0774 system system
     mount_all /fstab.sp8810
+    setprop ro.crypto.fuse_sdcard true
 
 on post-fs
     insmod /system/lib/modules/ump.ko
@@ -43,9 +46,14 @@ on post-fs
     chmod 0771 /efs
 
 on post-fs-data
+
+    # we will remap this as /storage/sdcard0 with the sdcard fuse tool
     mkdir /data/media 0770 media_rw media_rw
     chown media_rw media_rw /data/media
 
+
+
+    # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
     #for wifi
@@ -146,20 +154,20 @@ on boot
     chown system radio /sys/class/power_supply/battery/wpc_pin_state
     chown system radio /sys/class/power_supply/fuelgauge/fg_curr_ua
 
-   # CTIA event
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/call
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/video
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/music
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/browser
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/hotspot
-   chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/camera
-   chown system radio /sys/class/power_supply/battery/talk_wcdma
-   chown system radio /sys/class/power_supply/battery/talk_gsm
-   chown system radio /sys/class/power_supply/battery/call
-   chown system radio /sys/class/power_supply/battery/data_call
-   chown gps radio /sys/class/power_supply/battery/gps
-   chown system radio /sys/class/power_supply/battery/wifi
-   chown system radio /sys/class/power_supply/battery/lte
+    # CTIA event
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/call
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/video
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/music
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/browser
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/hotspot
+    chown sdcard_rw sdcard_rw /sys/class/power_supply/battery/camera
+    chown system radio /sys/class/power_supply/battery/talk_wcdma
+    chown system radio /sys/class/power_supply/battery/talk_gsm
+    chown system radio /sys/class/power_supply/battery/call
+    chown system radio /sys/class/power_supply/battery/data_call
+    chown gps radio /sys/class/power_supply/battery/gps
+    chown system radio /sys/class/power_supply/battery/wifi
+    chown system radio /sys/class/power_supply/battery/lte
 
     # Thermistor node
     chown radio system /sys/devices/platform/sec-thermistor/temp_adc
@@ -168,20 +176,20 @@ on boot
     # Permissions for touch
     chown system radio /sys/class/sec/tsp/cmd
 
-     # Permissions for Touchkey
-  	chown system radio /sys/class/sec/sec_touchkey/enable_disable 
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_brightness
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_menu
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_back
-	chown system radio /sys/class/sec/sec_touchkey/touch_update
-	chown system radio /sys/class/sec/sec_touchkey/touch_version
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_version_panel
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_version_phone
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_update_status
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_update
-	chown system radio /sys/class/sec/sec_touchkey/touch_sensitivity
-	chown system radio /sys/class/sec/sec_touchkey/touchkey_threshold
-	chown system system /sys/devices/virtual/sec/sec_touchkey/brightness
+    # Permissions for Touchkey
+    chown system radio /sys/class/sec/sec_touchkey/enable_disable 
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_brightness
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_menu
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_back
+    chown system radio /sys/class/sec/sec_touchkey/touch_update
+    chown system radio /sys/class/sec/sec_touchkey/touch_version
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_version_panel
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_version_phone
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_update_status
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_firm_update
+    chown system radio /sys/class/sec/sec_touchkey/touch_sensitivity
+    chown system radio /sys/class/sec/sec_touchkey/touchkey_threshold
+    chown system system /sys/devices/virtual/sec/sec_touchkey/brightness
 
      # Permissions for gpio_keys
 #    chown radio system /sys/class/sec/sec_key/wakeup_keys 
@@ -239,25 +247,97 @@ on boot
     chown system system /sys/class/power_supply/*
     chown system system /proc/sys/kernel/printk
 
-# TODO: btld is only used for FM
-
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
 #   simslot 1
-    setprop ro.multisim.simslotcount 1  
+#   setprop ro.multisim.simslotcount 1  
 #   simslot 2
-#    setprop ro.multisim.simslotcount 2
+    setprop ro.multisim.simslotcount 2
 #   simslot 3
 #   setprop ro.multisim.simslotcount 3
 
-on property:ro.debuggable=1
     mount debugfs debugfs /sys/kernel/debug
 
-on property:persist.sys.storage_preload=1
-    mount ext4 /dev/block/mmcblk0p22 /preload nosuid nodev noatime wait ro
-    setprop storage.preload.complete 1
+service vcharged /bin/vcharged
+    class core
+    user system
+    group system
+    oneshot
 
-on property:persist.sys.storage_preload=0
-    exec /system/bin/umount /preload
+service charge /bin/charge
+    class charger
+    user root
+    oneshot
+
+# Start nvitem daemon.
+service nvm_daemon /system/bin/nvm_daemon
+    class main
+    user system
+    group system radio shell
+    oneshot
+
+# Start samsung daemon.
+service ss_daemon /system/bin/ss_daemon
+    class main
+    user system
+    group system radio shell
+    oneshot
+
+# Telephony service
+service sprd_monitor /system/bin/sprd_monitor
+    class core
+    user system
+    group system radio shell
+    oneshot
+
+service modemd /system/bin/modemd
+    class main
+    user system
+    group system radio
+    oneshot
+
+service engpcclient /system/bin/engpcclient
+    class main
+    user system
+    group shell system
+    disabled
+    oneshot
+
+service engservice /system/bin/engservice
+    class main
+    user system
+    group system
+    disabled
+    oneshot
+
+service engmodemclient /system/bin/engmodemclient
+    class main
+    user system
+    group system radio
+    disabled
+    oneshot
+
+service engsetmacaddr /system/bin/engsetmacaddr
+    class main
+    user system
+    oneshot
+
+service phoneserver /system/bin/phoneserver
+    class core
+    user system
+    group system radio shell
+    disabled
+    oneshot
+
+service phoneserver_2sim /system/bin/phoneserver_2sim
+    class core
+    user system
+    group system radio shell
+    disabled
+    oneshot
+
+service calibrationinit /system/bin/calibration_init
+    class main
+    oneshot
 
 # rild service
 service ril-daemon /system/bin/rild_sp  -l /system/lib/libreference-ril.so -- -n 0
@@ -267,14 +347,36 @@ service ril-daemon /system/bin/rild_sp  -l /system/lib/libreference-ril.so -- -n
     user root
     group radio cache inet misc audio sdcard_rw log sdcard_r
 
+service ril-daemon2 /system/bin/rild_sp  -l /system/lib/libreference-ril.so -- -n 1
+    class main
+    socket rild1 stream 660 root radio
+    socket rild-debug1 stream 660 radio system
+    user root
+    group radio cache inet misc audio sdcard_rw log sdcard_r
+
+#on property:persist.msms.phone_count=2
+#    start ril-daemon2
 # create virtual SD card at /storage/sdcard0, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
 service sdcard /system/bin/sdcard /data/media 1023 1023
     class late_start
 
+# TODO: btld is only used for FM
+
+#	-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -N \
+service p2p_supplicant /system/bin/p2p_supplicant \
+	-ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+	class main
+	disabled
+	oneshot
+
 service wpa_supplicant /system/bin/wpa_supplicant \
     -Dnl80211 -iwlan0 -e/data/misc/wifi/entropy.bin -c/data/misc/wifi/wpa_supplicant.conf
+    #   we will start as root and wpa_supplicant will switch to user wifi
+    #   after setting up the capabilities required for WEXT
+    #   user wifi
+    #   group wifi inet keystore
     class main
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
@@ -285,8 +387,68 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -ABKL
     disabled
     oneshot
 
+# Bluetooth
+service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+    class main
+    disabled
+    oneshot
+
+service dhcpcd_p2p /system/bin/dhcpcd -aABKL
+    class main
+    disabled
+    oneshot
+
 service iprenew_wlan0 /system/bin/dhcpcd -n
     class main
+    disabled
+    oneshot
+
+service iprenew_p2p /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service macloader /system/bin/macloader
+	class main
+	oneshot
+
+on property:init.svc.macloader=stopped
+    chown system root /data/.cid.info
+    chmod 0664 /data/.cid.info
+    chown system root /data/.rev
+    chmod 0660 /data/.rev
+
+service slog /system/bin/slog
+    class main
+    user system
+    group system shell radio log
+
+# Create symlink
+service pty_symlink /system/bin/ext_symlink.sh -p
+    user root
+    disabled
+    oneshot
+
+service smd_symlink /system/bin/ext_symlink.sh -u
+	user root
+	disabled
+	oneshot
+
+# data on
+service data_on /system/bin/ext_data.sh  -u
+    user root
+    disabled
+    oneshot
+
+# data off
+service data_off /system/bin/ext_data.sh  -d
+    user root
+    disabled
+    oneshot
+
+# kill app
+service kill_phone /system/bin/ext_kill.sh  -m
+    user root
     disabled
     oneshot
 
@@ -296,12 +458,7 @@ service at_distributor /system/bin/at_distributor
     user root
     group radio log
 
-service macloader /system/bin/macloader
-        class main
-        oneshot
-
-on property:init.svc.macloader=stopped
-    chown system root /data/.cid.info
-    chmod 0664 /data/.cid.info
-    chown system root /data/.rev
-    chmod 0660 /data/.rev
+on alarm
+    class_start core
+    start media
+    exec /bin/poweroff_alarm
