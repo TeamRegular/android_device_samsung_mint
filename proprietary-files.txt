@@ -3,6 +3,7 @@ bin/at_distributor
 bin/bluetoothd
 bin/calibration_init
 bin/cpu
+bin/engappclient
 bin/engmodemclient
 bin/engpcclient
 bin/engservice
@@ -81,6 +82,32 @@ lib/libvbpga.so
 lib/libvolumemanager.so
 lib/libxlist.so
 
+# LVVEFS configs
+etc/audio/LVVEFS_Rx_Configuration.txt
+etc/audio/LVVEFS_Tx_Configuration.txt
+etc/audio/Rx_ControlParams_BLUETOOTH_HEADSET.txt
+etc/audio/Rx_ControlParams_EARPIECE_WIDEBAND.txt
+etc/audio/Rx_ControlParams_SPEAKER_WIDEBAND.txt
+etc/audio/Rx_ControlParams_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio/Rx_ControlParams_WIRED_HEADSET_WIDEBAND.txt
+etc/audio/Tx_ControlParams_BLUETOOTH_HEADSET.txt
+etc/audio/Tx_ControlParams_EARPIECE_WIDEBAND.txt
+etc/audio/Tx_ControlParams_SPEAKER_WIDEBAND.txt
+etc/audio/Tx_ControlParams_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio/Tx_ControlParams_WIRED_HEADSET_WIDEBAND.txt
+etc/audio_VR/LVVEFS_Rx_Configuration.txt
+etc/audio_VR/LVVEFS_Tx_Configuration.txt
+etc/audio_VR/Rx_ControlParams_VR_BLUETOOTH_HEADSET.txt
+etc/audio_VR/Rx_ControlParams_VR_EARPIECE_WIDEBAND.txt
+etc/audio_VR/Rx_ControlParams_VR_SPEAKER_WIDEBAND.txt
+etc/audio_VR/Rx_ControlParams_VR_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio_VR/Rx_ControlParams_VR_WIRED_HEADSET_WIDEBAND.txt
+etc/audio_VR/Tx_ControlParams_VR_BLUETOOTH_HEADSET.txt
+etc/audio_VR/Tx_ControlParams_VR_EARPIECE_WIDEBAND.txt
+etc/audio_VR/Tx_ControlParams_VR_SPEAKER_WIDEBAND.txt
+etc/audio_VR/Tx_ControlParams_VR_WIRED_HEADPHONE_WIDEBAND.txt
+etc/audio_VR/Tx_ControlParams_VR_WIRED_HEADSET_WIDEBAND.txt
+
 # OMX
 etc/pvplayer.cfg
 lib/libomx_avcdec_sharedlibrary.so
@@ -97,7 +124,7 @@ bin/ext_data.sh
 bin/ext_kill.sh
 bin/ext_symlink.sh
 etc/slog.conf.user
-etc/slog.conf 
+etc/slog.conf
 lib/libatparser.so
 lib/libeng_wifi_ptest.so
 lib/libengclient.so

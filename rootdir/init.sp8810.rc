@@ -26,7 +26,10 @@ on init
    
     mkdir /efs 0771 radio system
     symlink /efs /factory
-    symlink /dev/block/mmcblk0p11 /dev/block/param  
+    symlink /dev/block/mmcblk0p11 /dev/block/param
+
+    mkdir /dev/pipe 0755 system system
+    pipe 666 /dev/pipe/mmi.audio.ctrl
 
 on fs
 

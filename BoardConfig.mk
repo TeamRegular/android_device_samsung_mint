@@ -20,6 +20,8 @@
 # definition file).
 #
 
+TARGET_OTA_ASSERT_DEVICE := mint
+
 # Architecture
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a
